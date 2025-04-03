@@ -1,0 +1,57 @@
+.mar_cards{
+    margin:6rem 0 0 3rem!important;
+}
+.footer_ {
+    padding: 1.7rem 1rem;
+    background-color: white;
+    /* background: red; */
+}
+body{
+    min-height:100vh;
+}
+.center_{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* flex-basis: auto;
+    flex-grow:
+    flex-shrink: */
+}
+.img_logo{
+    height: 3rem;
+    width: auto;
+    object-fit: cover;
+}
+.content_nav{
+    font-size: larger;
+    font-weight: 700;
+    background-image: linear-gradient(45deg,rgb(0, 81, 255),#e86c6c);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip:text;
+}
+.feedback_{
+    justify-content: flex-end;
+}
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+.mar_card{
+    margin:6rem 0 0 5rem!important;
+}
+.btn-xl {
+    padding: 10px 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    width:23rem;
+}
+.custom-button:focus {
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+.forfeed {
+    margin: 0 10rem 0 -10rem;
+}

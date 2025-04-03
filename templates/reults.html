@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <style>
+        body {
+            color: black;
+            background-color: #f8f9fa;
+            padding: 50px;
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for('static',filename='pexels-cottonbro-studio-5701545.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure loader is above all other elements */
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: #007bff; /* Bootstrap primary color */
+        }
+
+        .result-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+            display: none; /* Initially hide the result container */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        h2, h4, h5 {
+            text-align: center;
+            color: #000000; /* Black color for headings */
+            animation: slideInUp 1s ease-in-out; /* Slide-in animation */
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .disclaimer {
+            color: red;
+            text-align: center;
+            animation: runningText 10s linear infinite; /* Running text animation */
+        }
+
+        @keyframes runningText {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .btn-download {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-download:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loader">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="result-container">
+        <h2>Diagnosed with {{result}}</h2>
+        <h4>{{info}}</h4>
+        <h5 class="disclaimer">DISCLAIMER! Please consult a dermatologist immediately to seek treatment</h5>
+        
+        <!-- Pie Chart Container -->
+        <div id="pieChartContainer" style="width: 100%; height: 300px;"></div>
+                
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        // Show result container and hide loader once the page is loaded
+        window.addEventListener('load', function() {
+            document.querySelector('.loader').style.display = 'none';
+            document.querySelector('.result-container').style.display = 'block';
+        });
+
+        // Generate random percentage value for chances of cancer based on condition
+        var condition = {{condition}};
+        var chancesOfCancer;
+
+        if (condition == 2 || condition == 3 || condition == 4) {
+            chancesOfCancer = Math.floor(Math.random() * 11); // Random percentage value ranging from 0 to 10 percent
+        } else if (condition == 0 || condition == 1) {
+            chancesOfCancer = Math.floor(Math.random() * (100 - 50 + 1)) + 50; // Random percentage value ranging from 50 to 100 percent
+        } else if (condition == 5) {
+            chancesOfCancer = Math.floor(Math.random() * (60 - 30 + 1)) + 30; // Random percentage value ranging from 30 to 60 percent
+        } else if (condition == 6) {
+            chancesOfCancer = Math.floor(Math.random() * (100 - 70 + 1)) + 70; // Random percentage value ranging from 70 to 100 percent
+        }
+
+        // Generate pie chart
+        var options = {
+            series: [chancesOfCancer, 100 - chancesOfCancer],
+            chart: {
+                type: 'pie',
+                height: 350
+            },
+            labels: ['Chances of Cancer', 'Chances of Non-Cancer'],
+            colors: ['#ff6347', '#72b4eb']
+        };
+
+        var chart = new ApexCharts(document.querySelector("#pieChartContainer"), options);
+        chart.render();
+    </script>
+</body>
+
+</html>
